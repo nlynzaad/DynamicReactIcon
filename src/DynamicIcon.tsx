@@ -28,7 +28,12 @@ const DynamicIcon: React.FC<IProps> = (props) => {
 
 	const defaultIcon = async () => {
 		if (!fallbackIcon) return errorIcon();
-		return (await getIcon(fallbackIcon)) ?? (await errorIcon());
+
+		try {
+			return (await getIcon(fallbackIcon)) ?? (await errorIcon());
+		} catch {
+			return await errorIcon();
+		}
 	};
 
 	const Icon = lazy(async () => {
